@@ -35,12 +35,33 @@ def get_access_token(app_id, app_secret, code):
                   {code}&grant_type=authorization_code"
     response = requests.get(token_url)
     return response.json()
+返回的数据中包含 access_token 和 openid：
+{
+    "access_token": "ACCESS_TOKEN",
+    "expires_in": 7200,
+    "refresh_token": "REFRESH_TOKEN",
+    "openid": "OPENID",
+    "scope": "SCOPE"
+}
 
 def get_user_info(access_token, openid):
     user_info_url = f"https://api.weixin.qq.com/sns/userinfo?access_token={access_token}&openid=
                       {openid}&lang=zh_CN"
     response = requests.get(user_info_url)
     return response.json()
+
+{
+    "openid": "OPENID",
+    "nickname": "NICKNAME",
+    "sex": 1,
+    "province": "PROVINCE",
+    "city": "CITY",
+    "country": "COUNTRY",
+    "headimgurl": "image url",
+    "privilege": ["PRIVILEGE1", "PRIVILEGE2"],
+    "unionid": "XXXXXXX"
+}
+
 ```
 ## 数据库设计
 在后端数据库中设计相关的表格来存储用户信息、朋友圈内容以及点赞记录。例如，设计三个表：Users、Posts和Likes。
